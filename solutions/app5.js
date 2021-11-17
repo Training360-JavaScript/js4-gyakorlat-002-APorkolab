@@ -9,9 +9,32 @@ const getProductData = () => productData;
  * @param {[{name: string}]} products termék objektumok tömbje
  * @returns {[{name: string}]} a name alapján rendezett tömb
  */
-const sortProducts = (products = [{ name: '' }]) => {
-    // itt dolgozz
+const sortProducts = (products = [{
+    name: ''
+}]) => {
+    return products.sort((object1, object2) =>
+        new Intl.Collator('en').compare(object1.name, object2.name))
 };
+const getProducts = (url = '') => {
+    fetch(url)
+        .then((response) => response.json())
+        .then(data => productData = sortProducts(data))
+        .catch(
+            () => console.log(`Error: ${url} is not found!`),
+        );
+};
+// const sortProducts = (products = [{
+//     name: ''
+// }]) => {
+//     fetch('https://nettuts.hu/jms/js4-002/users?limit=5')
+//         .then(response => response.sort(function (a, b) {
+//             var textA = a.name.toUpperCase();
+//             var textB = b.name.toUpperCase();
+//             return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+//         }))
+// };
+
+
 
 /**
  * TODO: hozd létre a getProducts függvényt! 
@@ -43,6 +66,6 @@ const sortProducts = (products = [{ name: '' }]) => {
  * TODO: exportáld ki helyesen a getProducts függvényt!
  */
 export {
-    
+    getProducts,
     getProductData,
 }
